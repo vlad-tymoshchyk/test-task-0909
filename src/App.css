@@ -8,3 +8,15 @@
   background-color: #adadad;
   border-radius: 3px;
 }
+
+.add-email-button {
+  color: blue;
+  cursor: pointer;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.small-icon {
+  width: 1em;
+  height: 1em;
+}

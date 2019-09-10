@@ -10,10 +10,11 @@ import {
   FormGroup,
   Label,
 } from 'reactstrap';
+import {MdDelete, MdRadioButtonUnchecked, MdControlPoint} from 'react-icons/md';
 import './App.css';
 
 function EmailFormGroup() {
-  const [emails, setEmails] = useState([]);
+  const [emails, setEmails] = useState(['one', 'two', 'tree', 'four', 'five']);
   const [currentInput, setCurrentInput] = useState('');
 
   const addEmail = e => {
@@ -23,9 +24,16 @@ function EmailFormGroup() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setCurrentInput(e.target.value);
-  }
+  };
+  const createDeleter = i => {
+    return () => {
+      const ar = [...emails];
+      ar.splice(i, 1);
+      setEmails(ar);
+    };
+  };
 
   return (
     <FormGroup>
@@ -35,16 +43,47 @@ function EmailFormGroup() {
           (Selected emails will be used as primary email for the candidate)
         </small>
       </Label>
-      {emails.map(email => (
-        <div className="p-2">
-        <Input key={email} type="email" value={email} disabled />
-      </div>
+      {emails.map((email, i) => (
+        <div key={email} className="d-flex">
+          <span className="d-flex align-items-center mx-2 pl-2">
+            <Input type="radio" name="selected-email" />
+          </span>
+          <Input
+            className="m-1"
+            key={email}
+            type="email"
+            value={email}
+            disabled
+          />
+          <span
+            className="d-flex align-items-center mx-2 text-primary cursor-pointer"
+            onClick={createDeleter(i)}>
+            <MdDelete />
+          </span>
+        </div>
       ))}
       <div>
-        <Input className="m-1" type="email" onChange={handleChange} value={currentInput}/>
-        <button type="button" onClick={addEmail}>
-          Add email
-        </button>
+        <div className="d-flex">
+          <span className="d-flex align-items-center mx-2 text-white">
+            <MdRadioButtonUnchecked />
+          </span>
+          <Input
+            className="m-1"
+            type="email"
+            onChange={handleChange}
+            value={currentInput}
+            placeholder="Enter a valid email address"
+          />
+          <span className="d-flex align-items-center mx-2 text-white">
+            <MdDelete />
+          </span>
+        </div>
+        <span className="ml-2 text-primary cursor-pointer" onClick={addEmail}>
+          <small>
+            <MdControlPoint />
+            <span className="ml-1">Add email</span>
+          </small>
+        </span>
       </div>
     </FormGroup>
   );
@@ -62,7 +101,7 @@ function App() {
         Open window
       </Button>
       <Modal size="lg" isOpen={modalOpen} toggle={toggle}>
-        <ModalHeader className="bg-primary text-white">
+        <ModalHeader className="bg-primary text-white" toggle={toggle}>
           Update Basic Info
         </ModalHeader>
         <ModalBody
@@ -86,17 +125,66 @@ function App() {
               <Label for="location">
                 <strong>Location</strong>
               </Label>
-              <Input type="text" id="location" />
+              <Input type="select" id="location">
+                <option selected>Moscow, Russia</option>
+                <option>Sidney, Australia</option>
+                <option>Berlin, Germany</option>
+                <option>London, Great Britain</option>
+                <option>Madrid, Spain</option>
+                <option>Roma, Italia</option>
+              </Input>
             </FormGroup>
             <FormGroup>
               <Label for="highlight">
                 <strong>Highlight</strong>
               </Label>
-              <Input type="textarea" id="highlight" />
+              <Input
+                type="textarea"
+                id="highlight"
+                placeholder="Enter highlights/summary for the candidate"
+              />
             </FormGroup>
             <FormGroup>
               <Label>Social Media</Label>
-              <Input type="textarea" />
+              <div className="d-flex my-1">
+                <span className="d-flex align-items-center mr-2">
+                  <img
+                    className="small-icon"
+                    src="icon-resume.svg"
+                    alt="linkedin icon"
+                  />
+                </span>
+                <Input type="file" />
+              </div>
+              <div className="d-flex my-1">
+                <span className="d-flex align-items-center mr-2">
+                  <img
+                    className="small-icon"
+                    src="icon-linkedin.svg"
+                    alt="linkedin icon"
+                  />
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter LinkedIn url of candidate"
+                />
+              </div>
+              <div className="d-flex my-1">
+                <span className="d-flex align-items-center mr-2">
+                  <img
+                    className="small-icon"
+                    src="icon-facebook.svg"
+                    alt="facebook icon"
+                  />
+                </span>
+                <Input
+                  type="text"
+                  placeholder="Enter Facebook url of candidate"
+                />
+              </div>
+              <span className="text-primary cursor-pointer">
+                <small>Show More</small>
+              </span>
             </FormGroup>
           </Form>
         </ModalBody>
