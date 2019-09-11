@@ -14,7 +14,7 @@ import {MdDelete, MdRadioButtonUnchecked, MdControlPoint} from 'react-icons/md';
 import './App.css';
 
 function EmailFormGroup() {
-  const [emails, setEmails] = useState(['one', 'two', 'tree', 'four', 'five']);
+  const [emails, setEmails] = useState([]);
   const [currentInput, setCurrentInput] = useState('');
 
   const addEmail = e => {
@@ -46,7 +46,7 @@ function EmailFormGroup() {
       {emails.map((email, i) => (
         <div key={email} className="d-flex">
           <span className="d-flex align-items-center mx-2 pl-2">
-            <Input type="radio" name="selected-email" />
+            <input type="radio" name="d-block selected-email pb-2" />
           </span>
           <Input
             className="m-1"
@@ -64,9 +64,6 @@ function EmailFormGroup() {
       ))}
       <div>
         <div className="d-flex">
-          <span className="d-flex align-items-center mx-2 text-white">
-            <MdRadioButtonUnchecked />
-          </span>
           <Input
             className="m-1"
             type="email"
@@ -74,9 +71,6 @@ function EmailFormGroup() {
             value={currentInput}
             placeholder="Enter a valid email address"
           />
-          <span className="d-flex align-items-center mx-2 text-white">
-            <MdDelete />
-          </span>
         </div>
         <span className="ml-2 text-primary cursor-pointer" onClick={addEmail}>
           <small>
